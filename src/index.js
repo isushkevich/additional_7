@@ -10,23 +10,22 @@ module.exports = function solveSudoku( matrix ) {
     }
   }
 
-  let row, column, value, found, emptyCount = emptyCells.length;
+  let row, column, candidate, found, emptyCount = emptyCells.length,
+    i = 0;
 
-  for ( let i = 0; i < emptyCount; ++i ) {
+  while ( i < emptyCount ) {
     row = emptyCells[ i ][ 0 ];
     column = emptyCells[ i ][ 1 ];
-
-    value = matrix[ row ][ column ] + 1;
-
+    candidate = matrix[ row ][ column ] + 1;
     found = false;
 
-    while ( !found && value <= 9 ) {
-
-      if ( checkSudoku( matrix, row, column, value ) ) {
+    while ( !found && candidate <= 9 ) {
+      if ( checkSudoku( matrix, row, column, candidate ) ) {
         found = true;
-        matrix[ row ][ column ] = value;
+        matrix[ row ][ column ] = candidate;
+        i++;
       } else {
-        value++;
+        candidate++;
       }
     }
 
@@ -37,7 +36,6 @@ module.exports = function solveSudoku( matrix ) {
   }
 
   return matrix;
-
 }
 
 
